@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+  <ModulePrefs title="Signed Request Example" description="This is an example gadget to use with OpenSocial Signed Request Validator PHP Library" author="Eiji Kitamura" author_email="agektmr@gmail.com" height="100">
+    <Require feature="opensocial-0.8" />
+    <Require feature="dynamic-height" />
+  </ModulePrefs>
+  <Content type="html" view="home,canvas">
+    <![CDATA[
+    <script type="text/javascript">
+    function fetchExternal() {
+      var url = document.getElementById('url').value;
+      var params = {};
+      params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.TEXT;
+      params[gadgets.io.RequestParameters.AUTHORIZATION] = gadgets.io.AuthorizationType.SIGNED;
+      params[gadgets.io.RequestParameters.REFRESH_INTERVAL] = 0;
+      gadgets.io.makeRequest(url, function(response) {
+        if (response.rc == undefined || response.text == null) {
+          alert('Invalid Response');
+        } else if (response.rc != 200) {
+          alert('Error: '+response.rc);
+        } else {
+          document.getElementById('dom').innerHTML = '<p>'+gadgets.util.escapeString(response.data)+'</p>';
+        }
+      }, params);
+    }
+    </script>
+    Enter URL: <input type="text" value="" id="url" />
+    <input type="button" value="Send Signed Request" onclick="fetchExternal()" /><br />
+    <br />
+    <div id="dom"></div>
+    ]]>
+  </Content>
+</Module>
