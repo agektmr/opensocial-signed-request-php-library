@@ -46,7 +46,6 @@ class SignedRequestValidator {
       $signature_method = new ServerSignatureMethod();
       $signature_method->set_public_cert($this->oauth_consumer_key);
       // See if signature is valid
-print_r($request);exit;
       if (!$signature_method->check_signature($request, null, null, $this->oauth_signature)) {
         $result = false;
       }
