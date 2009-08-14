@@ -49,6 +49,8 @@ class SignedRequestValidator {
       if (!$signature_method->check_signature($request, null, null, $this->oauth_signature)) {
         $result = false;
       }
+    } else {
+      $result = false;
     }
     // If invalid request, return HTTP 401 response
     if (!$result) {
